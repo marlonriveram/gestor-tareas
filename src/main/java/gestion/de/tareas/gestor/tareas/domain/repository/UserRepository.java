@@ -1,13 +1,12 @@
 package gestion.de.tareas.gestor.tareas.domain.repository;
 
-import gestion.de.tareas.gestor.tareas.application.dto.UserDto;
-import gestion.de.tareas.gestor.tareas.domain.model.User;
+import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
 
 import java.util.Optional;
 
 public interface UserRepository {
 
-    UserDto save (UserDto userDto) ;
-    Optional<UserDto> findByEmail (String email);
+    RegisterUserRequest save (RegisterUserRequest registerUserRequest) ;
+    Optional<RegisterUserRequest> findByEmail (String email);
     boolean existsByEmail (String email);
 }

@@ -1,27 +1,27 @@
 package gestion.de.tareas.gestor.tareas.application.mapper;
 
-import gestion.de.tareas.gestor.tareas.application.dto.UserDto;
+import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
 import gestion.de.tareas.gestor.tareas.domain.model.Role;
 import gestion.de.tareas.gestor.tareas.infrastructure.persistence.entity.UserEntity;
 
 public class Mapper {
 
-    public static UserEntity toEntity (UserDto userDto, Role role) {
+    public static UserEntity toEntity (RegisterUserRequest registerUserRequest, Role role) {
 
-        if(userDto == null) return  null;
+        if(registerUserRequest == null) return  null;
 
         return UserEntity.builder()
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .password(userDto.getPassword())
+                .name(registerUserRequest.getName())
+                .email(registerUserRequest.getEmail())
+                .password(registerUserRequest.getPassword())
                 .role(role)
                 .build();
     }
 
-    public static UserDto toDto (UserEntity user) {
+    public static RegisterUserRequest toDto (UserEntity user) {
         if(user == null) return null;
 
-        return UserDto.builder()
+        return RegisterUserRequest.builder()
                 .name(user.getName())
                 .email(user.getEmail())
                 .build();
