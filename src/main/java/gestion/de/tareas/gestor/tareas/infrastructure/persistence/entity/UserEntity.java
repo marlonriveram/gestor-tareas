@@ -1,6 +1,6 @@
 package gestion.de.tareas.gestor.tareas.infrastructure.persistence.entity;
 
-import gestion.de.tareas.gestor.tareas.domain.model.Role;
+import gestion.de.tareas.gestor.tareas.domain.model.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +20,5 @@ public class UserEntity {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole userRole;
 }

@@ -2,7 +2,7 @@ package gestion.de.tareas.gestor.tareas.infrastructure.repository;
 
 import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
 import gestion.de.tareas.gestor.tareas.application.mapper.Mapper;
-import gestion.de.tareas.gestor.tareas.domain.model.Role;
+import gestion.de.tareas.gestor.tareas.domain.model.UserRole;
 import gestion.de.tareas.gestor.tareas.domain.repository.UserRepository;
 import gestion.de.tareas.gestor.tareas.infrastructure.persistence.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public RegisterUserRequest save(RegisterUserRequest registerUserRequest) {
 
-        UserEntity user = Mapper.toEntity(registerUserRequest, Role.USER);
+        UserEntity user = Mapper.toEntity(registerUserRequest, UserRole.USER);
         UserEntity saveEntity = jpaUserRepository.save(user);
 
         return Mapper.toDto(saveEntity);

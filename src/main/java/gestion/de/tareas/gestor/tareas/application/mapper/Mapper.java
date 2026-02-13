@@ -1,12 +1,12 @@
 package gestion.de.tareas.gestor.tareas.application.mapper;
 
 import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
-import gestion.de.tareas.gestor.tareas.domain.model.Role;
+import gestion.de.tareas.gestor.tareas.domain.model.UserRole;
 import gestion.de.tareas.gestor.tareas.infrastructure.persistence.entity.UserEntity;
 
 public class Mapper {
 
-    public static UserEntity toEntity (RegisterUserRequest registerUserRequest, Role role) {
+    public static UserEntity toEntity (RegisterUserRequest registerUserRequest, UserRole userRole) {
 
         if(registerUserRequest == null) return  null;
 
@@ -14,7 +14,7 @@ public class Mapper {
                 .name(registerUserRequest.getName())
                 .email(registerUserRequest.getEmail())
                 .password(registerUserRequest.getPassword())
-                .role(role)
+                .userRole(userRole)
                 .build();
     }
 

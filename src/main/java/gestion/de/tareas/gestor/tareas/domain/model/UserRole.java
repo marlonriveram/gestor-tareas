@@ -1,6 +1,6 @@
 package gestion.de.tareas.gestor.tareas.domain.model;
 
-public enum Role {
+public enum UserRole {
     USER,
     ADMIN
 }
