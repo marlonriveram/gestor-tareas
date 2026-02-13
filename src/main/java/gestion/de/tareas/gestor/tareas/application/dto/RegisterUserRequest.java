@@ -12,6 +12,8 @@ import lombok.*;
 @Builder
 public class RegisterUserRequest {
 
+ // NotBlank es de la depencenica : spring-boot-starter-validation
+
    @NotBlank
     private String name;
     @NotBlank
