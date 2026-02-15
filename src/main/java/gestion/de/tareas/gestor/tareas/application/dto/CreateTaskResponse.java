@@ -9,8 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateTaskRequest {
-
+public class CreateTaskResponse {
+    private Long id;
     private String title;
     private String description;
+    private TaskStatus status;
+    private User user;
 }
