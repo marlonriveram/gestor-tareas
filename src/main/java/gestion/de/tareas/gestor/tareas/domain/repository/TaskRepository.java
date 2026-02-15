@@ -1,19 +1,22 @@
 package gestion.de.tareas.gestor.tareas.domain.repository;
 
-import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskRequest;
 
+import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskResponse;
+import gestion.de.tareas.gestor.tareas.domain.model.Task;
+
+import java.net.CacheResponse;
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository {
 
-    CreateTaskRequest save (CreateTaskRequest task) ;
+    CreateTaskResponse save (Task task) ;
 
-    Optional<CreateTaskRequest> task ( Long id);
+    Optional<CreateTaskResponse> findById (Long id);
 
-    List<CreateTaskRequest> findByUserId(Long userId);
+    List<CreateTaskResponse> findByUserId(Long userId);
 
-    String deleteById (Long id);
+    void deleteById (Long id);
 
 
 

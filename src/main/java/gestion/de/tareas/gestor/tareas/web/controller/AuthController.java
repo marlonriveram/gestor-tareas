@@ -1,6 +1,7 @@
 package gestion.de.tareas.gestor.tareas.web.controller;
 
 import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
+import gestion.de.tareas.gestor.tareas.application.dto.ResgisterUserResponse;
 import gestion.de.tareas.gestor.tareas.application.service.RegisterUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,12 @@ public class AuthController {
     private final RegisterUserService registerUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<RegisterUserRequest> register (@Valid @RequestBody RegisterUserRequest userRequest) {
+    public ResponseEntity<ResgisterUserResponse> register (@Valid @RequestBody RegisterUserRequest userRequest) {
 
-        RegisterUserRequest registerUser = registerUserService.registerUser(userRequest);
 
-        return  ResponseEntity.ok(registerUser);
+        ResgisterUserResponse response = registerUserService.registerUser(userRequest);
+
+        return  ResponseEntity.ok(response);
     }
 
 
