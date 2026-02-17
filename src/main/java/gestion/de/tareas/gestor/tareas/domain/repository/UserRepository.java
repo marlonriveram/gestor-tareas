@@ -7,9 +7,11 @@ import java.util.Optional;
 
 public interface UserRepository {
 
-    ResgisterUserResponse save (User user) ;
+    User save (User user) ;
 
-    Optional<ResgisterUserResponse> findByEmail (String email);
+    Optional<User> findById ( Long id);
+
+    Optional<User> findByEmail (String email);
 
     boolean existsByEmail (String email);
 

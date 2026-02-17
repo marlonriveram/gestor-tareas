@@ -1,7 +1,5 @@
 package gestion.de.tareas.gestor.tareas.infrastructure.repository;
 
-import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskRequest;
-import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskResponse;
 import gestion.de.tareas.gestor.tareas.application.mapper.TaskMapper;
 import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import gestion.de.tareas.gestor.tareas.domain.repository.TaskRepository;
@@ -16,28 +14,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskRepositoryImp implements TaskRepository {
 
-    private JpaTaskRepository jpaTaskRepository;
+    private final JpaTaskRepository jpaTaskRepository;
 
     @Override
-    public CreateTaskResponse save(Task task) {
+    public Task save(Task task) {
 
         TaskEntity taskEntity = TaskMapper.toEntity(task);
         TaskEntity saved = jpaTaskRepository.save(taskEntity);
+        Task res = TaskMapper.toDomain(saved);
 
-        return  TaskMapper.toDto(saved);
+
+        return res ;
     }
 
     @Override
-    public Optional<CreateTaskResponse> findById(Long id) {
+    public Optional<Task> findById(Long id) {
 
-        return jpaTaskRepository.findById(id).map(TaskMapper::toDto);
+        return jpaTaskRepository.findById(id).map(TaskMapper::toDomain);
     }
 
     @Override
-    public List<CreateTaskResponse> findByUserId(Long id) {
+    public List<Task> findByUserId(Long id) {
 
-
-        return jpaTaskRepository.findByUserId(id).stream().map(TaskMapper::toDto).toList();
+        return jpaTaskRepository.findByUserId(id).stream().map(TaskMapper::toDomain).toList();
     }
 
     @Override

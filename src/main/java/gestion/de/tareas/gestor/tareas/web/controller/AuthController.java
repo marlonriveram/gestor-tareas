@@ -2,7 +2,9 @@ package gestion.de.tareas.gestor.tareas.web.controller;
 
 import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
 import gestion.de.tareas.gestor.tareas.application.dto.ResgisterUserResponse;
+import gestion.de.tareas.gestor.tareas.application.mapper.UserMapper;
 import gestion.de.tareas.gestor.tareas.application.service.RegisterUserService;
+import gestion.de.tareas.gestor.tareas.domain.model.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +25,8 @@ public class AuthController {
     public ResponseEntity<ResgisterUserResponse> register (@Valid @RequestBody RegisterUserRequest userRequest) {
 
 
-        ResgisterUserResponse response = registerUserService.registerUser(userRequest);
+        User resgistered = registerUserService.registerUser(userRequest);
+        ResgisterUserResponse response = UserMapper.toDto(resgistered);
 
         return  ResponseEntity.ok(response);
     }

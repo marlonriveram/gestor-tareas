@@ -21,11 +21,8 @@ public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String title;
-    @NotBlank
     private String description;
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
     @CreationTimestamp
@@ -35,8 +32,5 @@ public class TaskEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-
-
-
 
 }

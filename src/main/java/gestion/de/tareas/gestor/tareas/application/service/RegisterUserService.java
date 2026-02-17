@@ -1,8 +1,6 @@
 package gestion.de.tareas.gestor.tareas.application.service;
 
 import gestion.de.tareas.gestor.tareas.application.dto.RegisterUserRequest;
-import gestion.de.tareas.gestor.tareas.application.dto.ResgisterUserResponse;
-import gestion.de.tareas.gestor.tareas.application.mapper.UserMapper;
 import gestion.de.tareas.gestor.tareas.domain.Exeption.EmailAlreadyExistsException;
 import gestion.de.tareas.gestor.tareas.domain.model.User;
 import gestion.de.tareas.gestor.tareas.domain.model.UserRole;
@@ -16,19 +14,20 @@ public class RegisterUserService {
 
     private final UserRepository userRepository;
 
-    public ResgisterUserResponse registerUser (RegisterUserRequest userRequest){
+    public User registerUser (RegisterUserRequest userRequest){
 
         if(userRepository.existsByEmail(userRequest.getEmail())) {
-            throw new EmailAlreadyExistsException(userRequest.getEmail());
+            throw new EmailAlreadyExistsException("Email already exists: " + userRequest.getEmail());
         }
 
-        User user = new User(
-                null,
-                userRequest.getName(),
-                userRequest.getEmail(),
-                userRequest.getPassword(),
-                UserRole.USER
-        );
+        User user = User.builder()
+                .name(userRequest.getName())
+                .email(userRequest.getEmail())
+                .password(userRequest.getPassword())
+                .userRole(UserRole.USER)
+                .build();
+
+
         return userRepository.save(user);
     }
 }
