@@ -19,19 +19,25 @@ public class UserRepositoryImp implements UserRepository {
     private final JpaUserRepository jpaUserRepository;
 
     @Override
-    public ResgisterUserResponse save(User user) {
+    public User save(User user) {
 
         UserEntity userEntity = UserMapper.toEntity(user,UserRole.USER) ;
         UserEntity saved = jpaUserRepository.save(userEntity);
 
-        return UserMapper.toDto(saved) ;
+        return UserMapper.toDomain(saved) ;
+    }
+
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return jpaUserRepository.findById(id).map(UserMapper::toDomain);
     }
 
     @Override
-    public Optional<ResgisterUserResponse> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
 
         return jpaUserRepository.findByEmail(email)
-                .map(UserMapper::toDto);
+                .map(UserMapper::toDomain);
 
     }
 
