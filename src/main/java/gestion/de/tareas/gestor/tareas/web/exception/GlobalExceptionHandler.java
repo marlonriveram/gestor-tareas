@@ -1,14 +1,18 @@
 package gestion.de.tareas.gestor.tareas.web.exception;
 
 import gestion.de.tareas.gestor.tareas.domain.Exeption.EmailAlreadyExistsException;
+import gestion.de.tareas.gestor.tareas.domain.Exeption.IllegalStateException;
 import gestion.de.tareas.gestor.tareas.domain.Exeption.TaskNotFoundException;
 import gestion.de.tareas.gestor.tareas.domain.Exeption.UnauthorizedException;
 import gestion.de.tareas.gestor.tareas.domain.Exeption.UserNotFoundException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.PortUnreachableException;
 import java.util.Map;
 
 @RestControllerAdvice
@@ -37,6 +41,19 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Map<String,String> handlerUnauthorized (UnauthorizedException ex) {
         return Map.of("error", ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String,String> hadlerIllegalState(IllegalStateException ex){
+        return Map.of("error",ex.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleBadCredentials() {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body("Invalid email or password");
     }
 
     @ExceptionHandler(Exception.class)

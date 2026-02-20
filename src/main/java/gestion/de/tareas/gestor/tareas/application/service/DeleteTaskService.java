@@ -13,14 +13,15 @@ public class DeleteTaskService {
 
     private final TaskRepository taskRepository;
 
-    public void delete (Long id,Long userId) {
+    public String delete (Long id,Long userId) {
 
         Task task = taskRepository.findById(id).orElseThrow(() -> new TaskNotFoundException("Task with id " + id + " was not found"));
 
         if (!task.getUser().getId().equals(userId)) {
-            throw new UnauthorizedException("You cannot modify this task");
+            throw new UnauthorizedException("You cannot deleted this task");
         }
 
         taskRepository.deleteById(id);
+        return "task successfully removed";
     }
 }

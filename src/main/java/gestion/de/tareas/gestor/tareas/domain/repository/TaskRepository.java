@@ -1,7 +1,6 @@
 package gestion.de.tareas.gestor.tareas.domain.repository;
 
 
-import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskResponse;
 import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import java.util.List;
 import java.util.Optional;

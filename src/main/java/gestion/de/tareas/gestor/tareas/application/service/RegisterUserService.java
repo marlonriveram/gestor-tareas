@@ -6,6 +6,7 @@ import gestion.de.tareas.gestor.tareas.domain.model.User;
 import gestion.de.tareas.gestor.tareas.domain.model.UserRole;
 import gestion.de.tareas.gestor.tareas.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class RegisterUserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User registerUser (RegisterUserRequest userRequest){
 
@@ -20,10 +22,12 @@ public class RegisterUserService {
             throw new EmailAlreadyExistsException("Email already exists: " + userRequest.getEmail());
         }
 
+        String password = passwordEncoder.encode(userRequest.getPassword());
+
         User user = User.builder()
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
-                .password(userRequest.getPassword())
+                .password(password)
                 .userRole(UserRole.USER)
                 .build();
 
