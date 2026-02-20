@@ -1,6 +1,6 @@
 package gestion.de.tareas.gestor.tareas.application.mapper;
 
-import gestion.de.tareas.gestor.tareas.application.dto.CreateTaskResponse;
+import gestion.de.tareas.gestor.tareas.application.dto.TaskResponse;
 import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import gestion.de.tareas.gestor.tareas.domain.model.User;
 import gestion.de.tareas.gestor.tareas.infrastructure.persistence.entity.TaskEntity;
@@ -31,7 +31,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public static CreateTaskResponse toDto(Task task){
+    public static TaskResponse toDto(Task task){
         if (task == null) return  null;
 
         User user = null;
@@ -45,7 +45,7 @@ public class TaskMapper {
                     .userRole(task.getUser().getUserRole())
                     .build();
         }
-        return CreateTaskResponse.builder()
+        return TaskResponse.builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())

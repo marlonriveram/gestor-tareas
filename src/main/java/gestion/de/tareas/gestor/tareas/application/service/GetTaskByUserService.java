@@ -1,5 +1,6 @@
 package gestion.de.tareas.gestor.tareas.application.service;
 
+import gestion.de.tareas.gestor.tareas.domain.Exeption.UnauthorizedException;
 import gestion.de.tareas.gestor.tareas.domain.Exeption.UserNotFoundException;
 import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import gestion.de.tareas.gestor.tareas.domain.model.User;
@@ -21,6 +22,7 @@ public class GetTaskByUserService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " was not found"));
+
 
         return taskRepository.findByUserId(userId);
     }

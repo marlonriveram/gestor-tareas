@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateTaskResponse {
+public class TaskResponse {
     private Long id;
     private String title;
     private String description;
