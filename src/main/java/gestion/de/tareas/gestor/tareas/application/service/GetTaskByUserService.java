@@ -6,6 +6,7 @@ import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import gestion.de.tareas.gestor.tareas.domain.model.User;
 import gestion.de.tareas.gestor.tareas.domain.repository.TaskRepository;
 import gestion.de.tareas.gestor.tareas.domain.repository.UserRepository;
+import gestion.de.tareas.gestor.tareas.infrastructure.security.CustomUserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,16 @@ public class GetTaskByUserService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
 
-    public List<Task> getByUser (Long userId) {
+    public List<Task> getByUser (CustomUserPrincipal userPrincipal) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " was not found"));
+        User user = userRepository.findById(userPrincipal.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("User with id " + userPrincipal.getUserId() + " was not found"));
 
+        boolean isAdmin = userPrincipal.getRole().equals("ADMIN");
+        if(isAdmin){
+            return taskRepository.findAll();
+        }
 
-        return taskRepository.findByUserId(userId);
+        return taskRepository.findByUserId(userPrincipal.getUserId());
     }
 }

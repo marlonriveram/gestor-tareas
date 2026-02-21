@@ -28,7 +28,7 @@ public class RegisterUserService {
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
                 .password(password)
-                .userRole(UserRole.USER)
+                .userRole(UserRole.ADMIN)
                 .build();
 
 
