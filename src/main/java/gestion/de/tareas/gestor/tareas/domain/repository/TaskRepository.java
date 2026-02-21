@@ -15,6 +15,8 @@ public interface TaskRepository {
 
     void deleteById (Long id);
 
+    List<Task> findAll ();
+
 
 
 }

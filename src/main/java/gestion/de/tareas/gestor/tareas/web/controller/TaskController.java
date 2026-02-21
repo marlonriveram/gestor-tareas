@@ -11,7 +11,9 @@ import gestion.de.tareas.gestor.tareas.domain.model.User;
 import gestion.de.tareas.gestor.tareas.infrastructure.security.CustomUserPrincipal;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,26 +35,16 @@ public class TaskController {
     @PostMapping
     public TaskResponse createTask (
             @Valid @RequestBody CreateTaskRequest taskRequest,
-            Authentication authentication) {
+            @AuthenticationPrincipal CustomUserPrincipal user) {
 
-        CustomUserPrincipal user =
-                (CustomUserPrincipal) authentication.getPrincipal();
-
-        Long userId = user.getUserId();
-
-        Task created = createTaskService.createTask(taskRequest,userId);
+        Task created = createTaskService.createTask(taskRequest,user);
 
         return TaskMapper.toDto(created);
     }
 
     @GetMapping
-    public List<TaskResponse> getByUser (Authentication authentication){
+    public List<TaskResponse> getByUser (@AuthenticationPrincipal CustomUserPrincipal userId){
 
-
-        CustomUserPrincipal user =
-                (CustomUserPrincipal) authentication.getPrincipal();
-
-        Long userId = user.getUserId();
 
         List<Task> userTasks = getTaskByUserService.getByUser(userId);
 
@@ -62,14 +54,10 @@ public class TaskController {
     @GetMapping("/{taskId}")
     public TaskResponse getById (
             @PathVariable Long taskId,
-            Authentication authentication
+            @AuthenticationPrincipal CustomUserPrincipal user
             ){
-        CustomUserPrincipal user =
-                (CustomUserPrincipal) authentication.getPrincipal();
 
-        Long userId = user.getUserId();
-
-        Task task = getTaskById.getById(taskId,userId);
+        Task task = getTaskById.getById(taskId,user);
 
 
         return TaskMapper.toDto(task);
@@ -79,29 +67,20 @@ public class TaskController {
     public TaskResponse update (
             @RequestBody UpdateTaskRequest updateTask,
             @PathVariable Long taskId,
-            Authentication authentication) {
+            @AuthenticationPrincipal CustomUserPrincipal user) {
 
-        CustomUserPrincipal user =
-                (CustomUserPrincipal) authentication.getPrincipal();
 
-        Long userId = user.getUserId();
-
-        Task updated = updateTaskService.update(updateTask,userId,taskId);
+        Task updated = updateTaskService.update(updateTask,user,taskId);
 
         return TaskMapper.toDto(updated);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{taskId}")
     public String delete (
             @PathVariable Long taskId,
-            Authentication authentication) {
-
-        CustomUserPrincipal user =
-                (CustomUserPrincipal) authentication.getPrincipal();
-
-        Long userId = user.getUserId();
-
-       return deleteTaskService.delete(taskId,userId);
+            @AuthenticationPrincipal CustomUserPrincipal user) {
+        System.out.println("User role in delete endpoint: " + user.getRole());
+       return deleteTaskService.delete(taskId,user);
     }
 
 }

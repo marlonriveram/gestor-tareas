@@ -6,6 +6,7 @@ import gestion.de.tareas.gestor.tareas.domain.Exeption.UnauthorizedException;
 import gestion.de.tareas.gestor.tareas.domain.model.Task;
 import gestion.de.tareas.gestor.tareas.domain.model.TaskStatus;
 import gestion.de.tareas.gestor.tareas.domain.repository.TaskRepository;
+import gestion.de.tareas.gestor.tareas.infrastructure.security.CustomUserPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ public class UpdateTaskService {
 
     public final TaskRepository taskRepository;
 
-    public Task update (UpdateTaskRequest update, Long userId, Long taskId) {
-
+    public Task update (UpdateTaskRequest update, CustomUserPrincipal user, Long taskId) {
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task with id " + taskId + " was not found"));
 
         //Verificar que la tarea a actualizar pertenesca al usuario
 
-        if (!task.getUser().getId().equals(userId)){
+        if (user.getRole().equals("USER") &&
+                !task.getUser().getId().equals(user.getUserId())){
             throw  new UnauthorizedException("You cannot modify this task");
         }
 

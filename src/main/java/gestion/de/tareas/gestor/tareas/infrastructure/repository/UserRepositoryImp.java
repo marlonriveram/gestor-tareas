@@ -21,7 +21,7 @@ public class UserRepositoryImp implements UserRepository {
     @Override
     public User save(User user) {
 
-        UserEntity userEntity = UserMapper.toEntity(user,UserRole.USER) ;
+        UserEntity userEntity = UserMapper.toEntity(user, user.getUserRole());
         UserEntity saved = jpaUserRepository.save(userEntity);
 
         return UserMapper.toDomain(saved) ;

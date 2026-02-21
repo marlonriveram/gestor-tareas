@@ -22,14 +22,11 @@ public class TaskRepositoryImp implements TaskRepository {
         TaskEntity taskEntity = TaskMapper.toEntity(task);
         TaskEntity saved = jpaTaskRepository.save(taskEntity);
         Task res = TaskMapper.toDomain(saved);
-
-
         return res ;
     }
 
     @Override
     public Optional<Task> findById(Long id) {
-
         return jpaTaskRepository.findById(id).map(TaskMapper::toDomain);
     }
 
@@ -42,5 +39,12 @@ public class TaskRepositoryImp implements TaskRepository {
     @Override
     public void deleteById(Long id) {
         jpaTaskRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Task> findAll() {
+
+        List<Task> tasks = jpaTaskRepository.findAll().stream().map(TaskMapper::toDomain).toList();
+        return tasks;
     }
 }

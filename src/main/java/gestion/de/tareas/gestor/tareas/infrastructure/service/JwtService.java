@@ -65,6 +65,7 @@ public class JwtService {
 
     public Long extractUserId(String token) {
         Claims claims = extractAllClaims(token);
+        // Obtener el userId del payload del token
         Object userId = claims.get("userId");
 
         if (userId == null) {
