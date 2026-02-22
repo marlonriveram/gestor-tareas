@@ -31,6 +31,21 @@ services:
     networks:
       - backend
 
+  backend:
+    build: .
+    container_name: gestor-tareas-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/gestor_tareas
+      DB_USERNAME: marlon
+      DB_PASSWORD: 1234
+
 volumes:
   postgres_data:
 
