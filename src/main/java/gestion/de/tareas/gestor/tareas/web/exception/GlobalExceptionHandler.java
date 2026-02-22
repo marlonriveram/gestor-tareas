@@ -20,33 +20,67 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TaskNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleTaskNotFound(TaskNotFoundException ex) {
-        return Map.of("error", ex.getMessage());
+    public ResponseEntity<ApiError> handleTaskNotFound(TaskNotFoundException ex) {
+
+        ApiError error = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
     }
 
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleUserNotFound(UserNotFoundException ex) {
-        return Map.of("error", ex.getMessage());
+    public ResponseEntity<ApiError> handleUserNotFound(UserNotFoundException ex) {
+
+        ApiError error = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<> (error,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map<String, String> handleEmailAlreadyExist(EmailAlreadyExistsException ex) {
-        return Map.of("error", ex.getMessage());
+    public ResponseEntity<ApiError> handleEmailAlreadyExist(EmailAlreadyExistsException ex) {
+
+        ApiError error = new ApiError(
+                HttpStatus.NOT_FOUND.value(),
+                HttpStatus.NOT_FOUND.getReasonPhrase(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<> (error,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public Map<String,String> handlerUnauthorized (UnauthorizedException ex) {
-        return Map.of("error", ex.getMessage());
+    public ResponseEntity<ApiError> handlerUnauthorized (UnauthorizedException ex) {
+
+        ApiError error = new ApiError(
+                HttpStatus.UNAUTHORIZED.value(),
+                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<> (error,HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String,String> hadlerIllegalState(IllegalStateException ex){
-        return Map.of("error",ex.getMessage());
+    public ResponseEntity<ApiError> hadlerIllegalState(IllegalStateException ex){
+
+        ApiError error = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<> (error,HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -58,7 +92,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Map<String, String> handleGeneric(Exception ex) {
-        return Map.of("error", "Internal server error");
+    public ResponseEntity<ApiError> handleGeneric(Exception ex) {
+
+        ApiError error = new ApiError(
+                HttpStatus.EXPECTATION_FAILED.value(),
+                HttpStatus.EXPECTATION_FAILED.getReasonPhrase(),
+                ex.getMessage()
+        );
+
+        return new ResponseEntity<> (error,HttpStatus.EXPECTATION_FAILED);
     }
 }
