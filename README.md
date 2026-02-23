@@ -191,6 +191,13 @@ Luego usar el token en los endpoints protegidos.
 Marlon Mosquera Rivera  
 Backend Developer
 
+⚠ Al arrancar la aplicacion genera un usuario admin por defecto con estas credenciales
+
+{
+  "email": "admin@admin.com",
+  "password": "admin123"
+}
+
 ⚠ Las credenciales mostradas son solo para entorno local.
 
 
